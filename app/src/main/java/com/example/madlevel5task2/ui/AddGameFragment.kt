@@ -1,11 +1,8 @@
 package com.example.madlevel5task2.ui
 
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
@@ -17,6 +14,10 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
  * A simple [Fragment] subclass as the second destination in the navigation.
  */
 class AddGameFragment : Fragment() {
+
+    init {
+        setHasOptionsMenu(true)
+    }
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -32,11 +33,19 @@ class AddGameFragment : Fragment() {
         // Handle toolbar
         val activity = requireActivity() as AppCompatActivity
         activity.findViewById<Toolbar>(R.id.toolbar).title = getString(R.string.fragment_add_game_toolbar_title)
+        activity.supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+
+        // Handle fab
         activity.findViewById<FloatingActionButton>(R.id.fab)
             .setImageDrawable(ContextCompat.getDrawable(requireContext(), android.R.drawable.ic_menu_save))
+    }
 
-        view.findViewById<Button>(R.id.button_second).setOnClickListener {
-            findNavController().popBackStack()
-        }
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_add_game, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        findNavController().popBackStack()
+        return true
     }
 }

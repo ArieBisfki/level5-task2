@@ -1,14 +1,16 @@
 <resources>
     <string name="app_name">MadLevel5Task2</string>
-    <string name="action_settings">Settings</string>
-    <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
     <string name="previous">Previous</string>
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="fragment_games_toolbar_title">Game Backlog</string>
+    <string name="fragment_games_statistics">Release: %s</string>
     <string name="fragment_add_game_toolbar_title">Add Game</string>
+    <string name="fragment_add_game_label_title">title</string>
+    <string name="fragment_add_game_label_platform">platform</string>
+    <string name="fragment_add_game_label_day">day</string>
+    <string name="fragment_add_game_label_month">month</string>
+    <string name="fragment_add_game_label_year">year</string>
+    <string name="menu_main_delete_button_title">Delete all</string>
 </resources>
