@@ -6,14 +6,22 @@ import androidx.fragment.app.Fragment
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.madlevel5task2.R
+import com.example.madlevel5task2.databinding.FragmentAddGameBinding
+import com.example.madlevel5task2.model.Game
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.snackbar.Snackbar
+import java.util.*
 
 /**
  * A simple [Fragment] subclass as the second destination in the navigation.
  */
 class AddGameFragment : Fragment() {
+
+    private val gamesViewModel: GamesViewModel by viewModels()
+    private lateinit var fragmentAddGameBinding: FragmentAddGameBinding
 
     init {
         setHasOptionsMenu(true)
@@ -24,7 +32,8 @@ class AddGameFragment : Fragment() {
             savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_add_game, container, false)
+        fragmentAddGameBinding = FragmentAddGameBinding.inflate(inflater)
+        return fragmentAddGameBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -36,8 +45,25 @@ class AddGameFragment : Fragment() {
         activity.supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
         // Handle fab
-        activity.findViewById<FloatingActionButton>(R.id.fab)
-            .setImageDrawable(ContextCompat.getDrawable(requireContext(), android.R.drawable.ic_menu_save))
+        activity.findViewById<FloatingActionButton>(R.id.fab).let { fab ->
+            fab.setImageDrawable(ContextCompat.getDrawable(requireContext(), android.R.drawable.ic_menu_save))
+            fab.setOnClickListener {
+
+                val newGame = fragmentAddGameBinding.let { Game(
+                    title = it.inputTitle.text.toString(),
+                    platform = it.inputPlatform.text.toString(),
+                    releaseDate = GregorianCalendar(
+                        it.inputReleaseDateYear.text.toString().toInt(),
+                        it.inputReleaseDateMonth.text.toString().toInt() - 1, // minus one because gregorian calendar uses indexes for months
+                        it.inputReleaseDateDay.text.toString().toInt()
+                    ).time
+                )}
+
+                gamesViewModel.insertGame(newGame)
+
+                findNavController().popBackStack()
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

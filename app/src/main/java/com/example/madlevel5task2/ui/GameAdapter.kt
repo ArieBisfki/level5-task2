@@ -19,7 +19,7 @@ class GameAdapter(
             itemGameBinding.let {
                 it.tvTitle.text = game.title
                 it.tvPlatform.text = game.platform
-                it.tvReleaseDate.text = itemView.context.getString(R.string.fragment_games_statistics, game.releaseDateString)
+                it.tvReleaseDate.text = itemView.context.getString(R.string.fragment_games_release_date, game.releaseDateString)
             }
         }
     }

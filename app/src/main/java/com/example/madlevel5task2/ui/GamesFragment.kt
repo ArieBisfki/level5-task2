@@ -6,16 +6,21 @@ import androidx.fragment.app.Fragment
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.madlevel5task2.R
 import com.example.madlevel5task2.databinding.FragmentGamesBinding
 import com.example.madlevel5task2.model.Game
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import java.util.*
 
 class GamesFragment : Fragment() {
+
     private lateinit var fragmentGamesBinding: FragmentGamesBinding
+
+    private val gamesViewModel: GamesViewModel by viewModels()
+    private val gamesList = mutableListOf<Game>()
+    private val gameAdapter = GameAdapter(gamesList)
 
     init {
         setHasOptionsMenu(true)
@@ -29,19 +34,14 @@ class GamesFragment : Fragment() {
         fragmentGamesBinding = FragmentGamesBinding.inflate(inflater, container, false)
 
         fragmentGamesBinding.rvGames.let {
-            it.adapter = GameAdapter(listOf(
-                Game(
-                    title = "Yakuza 5",
-                    platform = "PS4",
-                    releaseDate = GregorianCalendar(2020, 1, 11).time
-                ),
-                Game(
-                    title = "Yakuza: Like a Dragon",
-                    platform = "PS4, Windows, Steam, Xbox Series X/S, Xbox One (X)",
-                    releaseDate = GregorianCalendar(2020, 10, 15).time
-                )
-            ))
+            it.adapter = gameAdapter
             it.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+
+            gamesViewModel.games.observe(viewLifecycleOwner, { reminders ->
+                gamesList.clear()
+                gamesList.addAll(reminders)
+                gameAdapter.notifyDataSetChanged()
+            })
         }
 
         return fragmentGamesBinding.root
@@ -56,9 +56,9 @@ class GamesFragment : Fragment() {
         activity.supportActionBar!!.setDisplayHomeAsUpEnabled(false)
 
         // Handle fab
-        activity.findViewById<FloatingActionButton>(R.id.fab).let {
-            it.setImageDrawable(ContextCompat.getDrawable(requireContext(), android.R.drawable.ic_input_add))
-            it.setOnClickListener {
+        activity.findViewById<FloatingActionButton>(R.id.fab).let { fab ->
+            fab.setImageDrawable(ContextCompat.getDrawable(requireContext(), android.R.drawable.ic_input_add))
+            fab.setOnClickListener {
                 findNavController().navigate(R.id.action_gamesFragment_to_addGameFragment)
             }
         }
@@ -69,6 +69,7 @@ class GamesFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        gamesViewModel.deleteGames()
         return true
     }
 }

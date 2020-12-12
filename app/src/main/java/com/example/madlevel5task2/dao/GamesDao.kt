@@ -1,12 +1,13 @@
 package com.example.madlevel5task2.dao
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.example.madlevel5task2.model.Game
 
 @Dao
-interface GameDao {
+interface GamesDao {
     @Query("SELECT * FROM game")
-    suspend fun getAllGames(): List<Game>
+    fun getAllGames(): LiveData<List<Game>>
 
     @Insert
     suspend fun insertGame(game: Game)
