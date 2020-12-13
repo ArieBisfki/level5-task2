@@ -28,4 +28,6 @@ class GamesRepository(context: Context) {
     suspend fun insertGame(game: Game) = gameDao.insertGame(game)
 
     suspend fun deleteAllGames() = gameDao.deleteAllGames()
+
+    suspend fun deleteGame(id: Long) = gameDao.deleteGame(id)
 }

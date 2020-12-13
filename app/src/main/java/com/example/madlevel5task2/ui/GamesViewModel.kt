@@ -26,4 +26,10 @@ class GamesViewModel(application: Application) : AndroidViewModel(application) {
             gamesRepository.deleteAllGames()
         }
     }
+
+    fun deleteGame(id: Long) {
+        ioScope.launch {
+            gamesRepository.deleteGame(id)
+        }
+    }
 }

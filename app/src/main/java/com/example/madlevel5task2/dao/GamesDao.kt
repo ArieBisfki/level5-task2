@@ -14,4 +14,7 @@ interface GamesDao {
 
     @Query("DELETE FROM game")
     suspend fun deleteAllGames()
+
+    @Query("DELETE FROM game WHERE id == :id")
+    suspend fun deleteGame(id: Long)
 }

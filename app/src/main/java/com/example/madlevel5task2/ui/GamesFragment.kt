@@ -8,7 +8,9 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.madlevel5task2.R
 import com.example.madlevel5task2.databinding.FragmentGamesBinding
 import com.example.madlevel5task2.model.Game
@@ -33,15 +35,17 @@ class GamesFragment : Fragment() {
     ): View? {
         fragmentGamesBinding = FragmentGamesBinding.inflate(inflater, container, false)
 
-        fragmentGamesBinding.rvGames.let {
-            it.adapter = gameAdapter
-            it.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        // Setup recyclerview
+        fragmentGamesBinding.rvGames.let { rv ->
+            rv.adapter = gameAdapter
+            rv.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
             gamesViewModel.games.observe(viewLifecycleOwner, { reminders ->
                 gamesList.clear()
                 gamesList.addAll(reminders)
                 gameAdapter.notifyDataSetChanged()
             })
+            createItemTouchHelper().attachToRecyclerView(rv)
         }
 
         return fragmentGamesBinding.root
@@ -71,5 +75,22 @@ class GamesFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         gamesViewModel.deleteGames()
         return true
+    }
+
+    private fun createItemTouchHelper(): ItemTouchHelper {
+        val callback = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ) = false
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val position = viewHolder.adapterPosition
+                val gameToDelete = gamesList[position]
+                gamesViewModel.deleteGame(gameToDelete.id!!)
+            }
+        }
+        return ItemTouchHelper(callback)
     }
 }
