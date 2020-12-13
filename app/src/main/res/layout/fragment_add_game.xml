@@ -23,10 +23,12 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:hint="@string/fragment_add_game_label_title"
+                android:textColorHint="@color/colorBackgroundDark"
                 android:layout_height="wrap_content">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/input_title"
                     android:background="@color/white"
+                    android:textColor="@color/colorBackgroundDark"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
             </com.google.android.material.textfield.TextInputLayout>
@@ -34,10 +36,12 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:hint="@string/fragment_add_game_label_platform"
+                android:textColorHint="@color/colorBackgroundDark"
                 android:layout_height="wrap_content">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/input_platform"
                     android:background="@color/white"
+                    android:textColor="@color/colorBackgroundDark"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
             </com.google.android.material.textfield.TextInputLayout>
@@ -50,12 +54,14 @@
                 android:baselineAligned="false">
                 <com.google.android.material.textfield.TextInputLayout
                     android:hint="@string/fragment_add_game_label_day"
+                    android:textColorHint="@color/colorBackgroundDark"
                     android:layout_height="wrap_content"
                     android:layout_weight="33"
                     android:layout_width="0dp">
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/input_release_date_day"
                         android:background="@color/white"
+                        android:textColor="@color/colorBackgroundDark"
                         android:layout_width="match_parent"
                         android:inputType="number"
                         android:layout_height="wrap_content"/>
@@ -63,12 +69,14 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:hint="@string/fragment_add_game_label_month"
+                    android:textColorHint="@color/colorBackgroundDark"
                     android:layout_height="wrap_content"
                     android:layout_weight="33"
                     android:layout_width="0dp">
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/input_release_date_month"
                         android:background="@color/white"
+                        android:textColor="@color/colorBackgroundDark"
                         android:layout_width="match_parent"
                         android:inputType="number"
                         android:layout_height="wrap_content"/>
@@ -76,12 +84,14 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:hint="@string/fragment_add_game_label_year"
+                    android:textColorHint="@color/colorBackgroundDark"
                     android:layout_height="wrap_content"
                     android:layout_weight="33"
                     android:layout_width="0dp">
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/input_release_date_year"
                         android:background="@color/white"
+                        android:textColor="@color/colorBackgroundDark"
                         android:layout_width="match_parent"
                         android:inputType="number"
                         android:layout_height="wrap_content"/>
